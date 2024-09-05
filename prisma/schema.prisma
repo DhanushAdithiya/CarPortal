@@ -1,0 +1,67 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Car {
+  id              Int          @id @default(autoincrement())
+  name            String
+  manufacturerId  Int
+  price           Int
+  images          String       @default("https://placehold.co/600x400")
+  manufactureYear DateTime
+  manufacturer    Manufacturer @relation(fields: [manufacturerId], references: [id])
+  sales           Sale[]
+  purchases       Purchase[]
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+}
+
+model Manufacturer {
+  id        Int      @id @default(autoincrement())
+  name      String
+  cars      Car[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Sale {
+  id         Int      @id @default(autoincrement())
+  carId      Int
+  salePrice  Int
+  customerId Int
+  saleDate   DateTime
+  car        Car      @relation(fields: [carId], references: [id])
+  customer   Customer @relation(fields: [customerId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Customer {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  email     String?
+  purchases Purchase[]
+  password  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Sale      Sale[]
+}
+
+model Purchase {
+  id           Int      @id @default(autoincrement())
+  value        Int
+  discount     Int      @default(0)
+  carId        Int
+  purchaseDate DateTime
+  credit       Boolean
+  car          Car      @relation(fields: [carId], references: [id])
+  customer     Customer @relation(fields: [customerId], references: [id])
+  customerId   Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
