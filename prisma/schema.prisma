@@ -13,7 +13,7 @@ model Car {
   manufacturerId  Int
   price           Int
   images          String       @default("https://placehold.co/600x400")
-  manufactureYear DateTime
+  manufactureYear Int
   manufacturer    Manufacturer @relation(fields: [manufacturerId], references: [id])
   sales           Sale[]
   purchases       Purchase[]

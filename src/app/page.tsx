@@ -5,6 +5,7 @@ export default function Home() {
       <a href="/createAccount">Sign Up</a>
       <a href="/cars">Cars</a>
       <a href="/uploadCar">Upload Car</a>
+      <a href="/addManufacturer">Add Manufacturers</a>
     </div>
   );
 }
