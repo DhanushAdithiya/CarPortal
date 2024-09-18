@@ -15,18 +15,21 @@ model Car {
   images          String       @default("https://placehold.co/600x400")
   manufactureYear Int
   manufacturer    Manufacturer @relation(fields: [manufacturerId], references: [id])
-  sales           Sale[]
-  purchases       Purchase[]
+  sale            Int[]
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
+  Sales           Sale[]
+  purchases       Purchase[]
 }
 
 model Manufacturer {
   id        Int      @id @default(autoincrement())
   name      String   @unique
-  cars      Car[]
+	logo 			String	 @default("https://placehold.co/600x400")
+  cars      Int[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Car       Car[]
 }
 
 model Sale {
@@ -45,10 +48,11 @@ model Customer {
   id        Int        @id @default(autoincrement())
   name      String     @unique
   email     String?
-  purchases Purchase[]
   password  String
+  purchases Int[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  Purchase  Purchase[]
   Sale      Sale[]
 }
 
